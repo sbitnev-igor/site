@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Игорь Сбитнев — Backend-разработчик Python</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #0c0c0f;
+  --surface: #141418;
+  --surface-hover: #1c1c22;
+  --border: #2a2a32;
+  --ink: #e8e8ec;
+  --ink-muted: #8a8a96;
+  --accent: #34d399;
+  --accent-dim: #065f46;
+  --mono: 'JetBrains Mono', monospace;
+  --sans: 'Inter', system-ui, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Nav ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1rem 2rem;
+  background: rgba(12,12,15,.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+nav .logo {
+  font-family: var(--mono); font-weight: 600; font-size: .95rem;
+  color: var(--accent);
+  letter-spacing: -.02em;
+}
+nav .links { display: flex; gap: 1.5rem; }
+nav .links a {
+  color: var(--ink-muted); text-decoration: none; font-size: .85rem;
+  font-weight: 500; transition: color .2s;
+}
+nav .links a:hover { color: var(--ink); }
+
+/* ── Sections ── */
+section {
+  max-width: 720px; margin: 0 auto;
+  padding: 5rem 1.5rem;
+}
+
+/* ── Hero ── */
+.hero {
+  min-height: 100vh; display: flex; flex-direction: column;
+  justify-content: center; padding-top: 5rem;
+}
+.hero-tag {
+  font-family: var(--mono); font-size: .8rem; color: var(--accent);
+  letter-spacing: .08em; text-transform: uppercase; margin-bottom: 1.5rem;
+}
+.hero h1 {
+  font-size: clamp(2.2rem, 5vw, 3.2rem); font-weight: 700;
+  line-height: 1.15; letter-spacing: -.03em; margin-bottom: 1rem;
+}
+.hero h1 span { color: var(--accent); }
+.hero p {
+  font-size: 1.1rem; color: var(--ink-muted); max-width: 540px;
+  line-height: 1.7; margin-bottom: 2rem;
+}
+.hero-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+.hero-links a {
+  font-family: var(--mono); font-size: .82rem; color: var(--ink-muted);
+  text-decoration: none; padding: .5rem 1rem;
+  border: 1px solid var(--border); border-radius: 6px;
+  transition: all .2s;
+}
+.hero-links a:hover {
+  border-color: var(--accent); color: var(--accent);
+  background: rgba(52,211,153,.06);
+}
+
+/* ── Section Headers ── */
+.section-label {
+  font-family: var(--mono); font-size: .75rem; color: var(--accent);
+  letter-spacing: .1em; text-transform: uppercase; margin-bottom: .75rem;
+}
+.section-title {
+  font-size: 1.6rem; font-weight: 700; letter-spacing: -.02em;
+  margin-bottom: 2rem;
+}
+
+/* ── About ── */
+.about-text {
+  font-size: 1rem; color: var(--ink-muted); line-height: 1.8;
+}
+.about-text strong { color: var(--ink); font-weight: 600; }
+
+/* ── Skills ── */
+.skills-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+}
+.skill-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 1.25rem;
+  transition: border-color .2s;
+}
+.skill-card:hover { border-color: var(--accent-dim); }
+.skill-card h3 {
+  font-family: var(--mono); font-size: .78rem; font-weight: 600;
+  color: var(--accent); letter-spacing: .04em; margin-bottom: .6rem;
+  text-transform: uppercase;
+}
+.skill-card ul { list-style: none; }
+.skill-card li {
+  font-size: .88rem; color: var(--ink-muted); padding: .15rem 0;
+}
+.skill-card li::before {
+  content: '→'; color: var(--border); margin-right: .5rem;
+}
+
+/* ── Projects ── */
+.projects-list { display: flex; flex-direction: column; gap: 1.5rem; }
+.project {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 1.5rem;
+  transition: border-color .2s;
+}
+.project:hover { border-color: var(--accent-dim); }
+.project-head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: .75rem; flex-wrap: wrap; gap: .5rem;
+}
+.project-name {
+  font-family: var(--mono); font-size: .95rem; font-weight: 600;
+  color: var(--ink);
+}
+.project-year {
+  font-family: var(--mono); font-size: .75rem; color: var(--ink-muted);
+}
+.project-desc {
+  font-size: .9rem; color: var(--ink-muted); margin-bottom: .75rem;
+  line-height: 1.7;
+}
+.project-desc strong { color: var(--ink); font-weight: 500; }
+.project-tech {
+  display: flex; gap: .4rem; flex-wrap: wrap; margin-bottom: .6rem;
+}
+.project-tech span {
+  font-family: var(--mono); font-size: .7rem;
+  padding: .2rem .5rem; background: var(--accent-dim);
+  color: var(--accent); border-radius: 4px;
+}
+.project-link {
+  font-family: var(--mono); font-size: .78rem; color: var(--accent);
+  text-decoration: none; opacity: .8; transition: opacity .2s;
+}
+.project-link:hover { opacity: 1; }
+
+/* ── AI Tools ── */
+.ai-section {
+  border-top: 1px solid var(--border); padding-top: 3rem;
+}
+.ai-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: .75rem;
+}
+.ai-item {
+  display: flex; align-items: center; gap: .6rem;
+  font-size: .88rem; color: var(--ink-muted);
+  padding: .6rem .8rem; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 6px;
+}
+.ai-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent); flex-shrink: 0;
+}
+
+/* ── Contact ── */
+.contact-list {
+  display: flex; flex-direction: column; gap: .6rem;
+}
+.contact-item {
+  display: flex; align-items: center; gap: .75rem;
+  font-size: .9rem;
+}
+.contact-item .label {
+  font-family: var(--mono); font-size: .75rem;
+  color: var(--ink-muted); width: 90px; flex-shrink: 0;
+  text-transform: uppercase; letter-spacing: .06em;
+}
+.contact-item a {
+  color: var(--accent); text-decoration: none;
+  transition: opacity .2s;
+}
+.contact-item a:hover { opacity: .8; }
+
+/* ── Footer ── */
+footer {
+  max-width: 720px; margin: 0 auto;
+  padding: 3rem 1.5rem 4rem;
+  border-top: 1px solid var(--border);
+  font-family: var(--mono); font-size: .75rem;
+  color: var(--ink-muted); text-align: center;
+}
+
+/* ── Mobile ── */
+@media (max-width: 640px) {
+  nav { padding: .75rem 1rem; }
+  nav .links { gap: 1rem; }
+  nav .links a { font-size: .78rem; }
+  section { padding: 3rem 1rem; }
+  .skills-grid { grid-template-columns: 1fr; }
+  .ai-grid { grid-template-columns: 1fr; }
+  .hero { padding-top: 4rem; }
+  .contact-item .label { width: 70px; }
+}
+
+/* ── Motion ── */
+@media (prefers-reduced-motion: no-preference) {
+  .fade-in {
+    opacity: 0; transform: translateY(20px);
+    transition: opacity .6s ease, transform .6s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">&lt;sbitnev/&gt;</div>
+  <div class="links">
+    <a href="#about">О себе</a>
+    <a href="#skills">Навыки</a>
+    <a href="#projects">Проекты</a>
+    <a href="#contact">Контакт</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-tag">Backend-разработчик</div>
+  <h1>Игорь<br><span>Сбитнев</span></h1>
+  <p>Python-бэкенд: FastAPI, Telegram-боты, AI-автоматизация. 4&nbsp;проекта на&nbsp;GitHub&nbsp;— от&nbsp;идеи до&nbsp;деплоя.</p>
+  <div class="hero-links">
+    <a href="https://github.com/sbitnev-igor" target="_blank">GitHub ↗</a>
+    <a href="https://t.me/sbitnev_igor" target="_blank">Telegram ↗</a>
+    <a href="mailto:sie8igor@yandex.ru">Email ↗</a>
+  </div>
+</section>
+
+<!-- About -->
+<section id="about" class="fade-in">
+  <div class="section-label">01 — О себе</div>
+  <div class="section-title">Чем занимаюсь</div>
+  <p class="about-text">
+    Backend на&nbsp;<strong>Python</strong>: проектирую API, пишу Telegram-боты, автоматизирую процессы с&nbsp;помощью <strong>AI-агентов</strong>.
+    Все&nbsp;проекты — от&nbsp;архитектуры базы данных до&nbsp;деплоя на&nbsp;сервер.
+    <br><br>
+    Разрабатываю собственного <strong>AI-CLI кодинг-ассистента</strong> — агента для&nbsp;работы с&nbsp;кодом из&nbsp;терминала.
+    Использую AI-инструменты (Codex, Claude Code, OpenCode) для&nbsp;генерации, ревью и&nbsp;отладки кода.
+  </p>
+</section>
+
+<!-- Skills -->
+<section id="skills" class="fade-in">
+  <div class="section-label">02 — Навыки</div>
+  <div class="section-title">Технологический стек</div>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <h3>Backend</h3>
+      <ul>
+        <li>Python 3.11+, asyncio</li>
+        <li>FastAPI (REST API, pydantic)</li>
+        <li>SQLAlchemy 2.0 (async)</li>
+        <li>PostgreSQL, SQLite</li>
+        <li>Redis (кэш, очереди)</li>
+        <li>APScheduler</li>
+      </ul>
+    </div>
+    <div class="skill-card">
+      <h3>Telegram-боты</h3>
+      <ul>
+        <li>aiogram 3</li>
+        <li>FSM, inline-клавиатуры</li>
+        <li>Webhooks</li>
+        <li>Массовые рассылки</li>
+        <li>Подписки, автовыдача</li>
+      </ul>
+    </div>
+    <div class="skill-card">
+      <h3>Инфраструктура</h3>
+      <ul>
+        <li>Docker, Docker Compose</li>
+        <li>Git, GitHub</li>
+        <li>Railway, Heroku</li>
+        <li>Ubuntu-сервер</li>
+      </ul>
+    </div>
+    <div class="skill-card">
+      <h3>Данные</h3>
+      <ul>
+        <li>pandas, openpyxl</li>
+        <li>Обработка и экспорт Excel</li>
+        <li>AI-аналитика (Mistral)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Projects -->
+<section id="projects" class="fade-in">
+  <div class="section-label">03 — Проекты</div>
+  <div class="section-title">Портфолио</div>
+  <div class="projects-list">
+
+    <div class="project">
+      <div class="project-head">
+        <span class="project-name">FilePay-Bot</span>
+        <span class="project-year">2026</span>
+      </div>
+      <p class="project-desc">
+        Продажа файлов по&nbsp;подписке. <strong>Полный цикл:</strong> автовыдача файлов, контроль срока подписки, напоминания о&nbsp;продлении (APScheduler). Админ-панель с&nbsp;массовыми рассылками, управлением пользователями и&nbsp;экспортом БД в&nbsp;Excel.
+      </p>
+      <div class="project-tech">
+        <span>aiogram 3</span><span>SQLAlchemy</span><span>APScheduler</span><span>Redis</span>
+      </div>
+      <a class="project-link" href="https://github.com/sbitnev-igor/File-Pay-Bot" target="_blank">github.com/sbitnev-igor/File-Pay-Bot ↗</a>
+    </div>
+
+    <div class="project">
+      <div class="project-head">
+        <span class="project-name">Habit-Tracking-Bot</span>
+        <span class="project-year">2025–2026</span>
+      </div>
+      <p class="project-desc">
+        Трекер привычек. Ежедневные напоминания <strong>с&nbsp;учётом часового пояса</strong> каждого пользователя. FSM-сценарии, подсчёт серий (streak), админ-рассылки.
+      </p>
+      <div class="project-tech">
+        <span>aiogram 3</span><span>FSM</span><span>SQLite</span>
+      </div>
+      <a class="project-link" href="https://github.com/sbitnev-igor/Habit-Tracking-Bot" target="_blank">github.com/sbitnev-igor/Habit-Tracking-Bot ↗</a>
+    </div>
+
+    <div class="project">
+      <div class="project-head">
+        <span class="project-name">Tracker-Feel-Bot</span>
+        <span class="project-year">2025–2026</span>
+      </div>
+      <p class="project-desc">
+        Трекер настроения с&nbsp;<strong>ИИ-аналитикой</strong> (Mistral Large): паттерны настроения, ранние признаки выгорания. График за&nbsp;30&nbsp;дней, поиск по&nbsp;дате, inline-навигация. Деплой на&nbsp;Railway.
+      </p>
+      <div class="project-tech">
+        <span>aiogram 3</span><span>Mistral API</span><span>Railway</span>
+      </div>
+      <a class="project-link" href="https://github.com/sbitnev-igor/Tracker-Feel-Bot" target="_blank">github.com/sbitnev-igor/Tracker-Feel-Bot ↗</a>
+    </div>
+
+    <div class="project">
+      <div class="project-head">
+        <span class="project-name">AI-Edit-Bot</span>
+        <span class="project-year">2025–2026</span>
+      </div>
+      <p class="project-desc">
+        ИИ-редактор фото. Модульная архитектура: config, db, handlers, keyboards, logging. Асинхронный стек <strong>aiogram 3.24 + SQLAlchemy 2.0 + aiosqlite</strong>.
+      </p>
+      <div class="project-tech">
+        <span>aiogram 3.24</span><span>SQLAlchemy 2.0</span><span>aiosqlite</span>
+      </div>
+      <a class="project-link" href="https://github.com/sbitnev-igor/Ai-Edit-Bot" target="_blank">github.com/sbitnev-igor/Ai-Edit-Bot ↗</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- AI Tools -->
+<section class="ai-section fade-in">
+  <div class="section-label">04 — AI-инструменты</div>
+  <div class="section-title">Ускоряю разработку</div>
+  <div class="ai-grid">
+    <div class="ai-item"><span class="ai-dot"></span>Codex — генерация и рефакторинг</div>
+    <div class="ai-item"><span class="ai-dot"></span>Claude Code — код-ревью и отладка</div>
+    <div class="ai-item"><span class="ai-dot"></span>OpenCode — повседневная работа</div>
+    <div class="ai-item"><span class="ai-dot"></span>OpenClaw — агенты в Docker</div>
+    <div class="ai-item"><span class="ai-dot"></span>Hermes Agent — AI-ассистент</div>
+    <div class="ai-item"><span class="ai-dot"></span>Собственный AI-CLI — в разработке</div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact" class="fade-in">
+  <div class="section-label">05 — Контакт</div>
+  <div class="section-title">Связаться</div>
+  <div class="contact-list">
+    <div class="contact-item">
+      <span class="label">Телефон</span>
+      <a href="tel:+79956492050">+7 995 649-20-50</a>
+    </div>
+    <div class="contact-item">
+      <span class="label">Email</span>
+      <a href="mailto:sie8igor@yandex.ru">sie8igor@yandex.ru</a>
+    </div>
+    <div class="contact-item">
+      <span class="label">Telegram</span>
+      <a href="https://t.me/sbitnev_igor" target="_blank">@sbitnev_igor</a>
+    </div>
+    <div class="contact-item">
+      <span class="label">GitHub</span>
+      <a href="https://github.com/sbitnev-igor" target="_blank">github.com/sbitnev-igor</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 Игорь Сбитнев
+</footer>
+
+<script>
+// Intersection Observer for fade-in
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// Smooth nav hide on scroll
+let lastScroll = 0;
+const nav = document.querySelector('nav');
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  nav.style.transform = y > lastScroll && y > 80 ? 'translateY(-100%)' : 'translateY(0)';
+  lastScroll = y;
+}, { passive: true });
+</script>
+
+</body>
+</html>
